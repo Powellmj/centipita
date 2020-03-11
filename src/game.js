@@ -2,6 +2,8 @@ const Mushroom = require("./mushroom");
 const Bullet = require("./bullet");
 const Ship = require("./ship");
 const Snake = require("./snake");
+const Spider = require("./spider");
+const Drip = require("./drip");
 const Util = require("./util");
 
 function Game() {
@@ -9,6 +11,8 @@ function Game() {
   this.bullets = [];
   this.ships = [];
   this.snakes = [];
+  this.spiders = [];
+  this.drips = [];
 
   this.addMushrooms();
   this.addSnakes();
@@ -19,7 +23,7 @@ Game.DIM_X = 440;
 Game.DIM_Y = 660;
 Game.FPS = 32;
 Game.NUM_MUSHROOMS = 25;
-Game.NUM_SNAKES = 8;
+Game.NUM_SNAKES = 12;
 
 Game.prototype.add = function add(object) {
   if (object instanceof Mushroom) {
@@ -30,6 +34,10 @@ Game.prototype.add = function add(object) {
     this.ships.push(object);
   } else if (object instanceof Snake) {
     this.snakes.push(object);
+  } else if (object instanceof Drip) {
+    this.drips.push(object);
+  } else if (object instanceof Spider) {
+    this.spiders.push(object);
   } else {
     throw new Error("unknown type of object");
   }
@@ -38,6 +46,32 @@ Game.prototype.add = function add(object) {
 Game.prototype.addMushrooms = function addMushrooms() {
   for (let i = 0; i < Game.NUM_MUSHROOMS; i++) {
     this.add(new Mushroom({ game: this }));
+  }
+};
+
+Game.prototype.addMush = function addMush(pos) {
+  this.add(new Mushroom({ game: this, pos: pos }));
+}
+
+let dripCall = true
+Game.prototype.addDrips = function addDrips() {
+  if (dripCall) {
+    dripCall = false
+    setTimeout(() => {
+      this.add(new Drip({ game: this }));
+      dripCall = true
+    }, 5000)
+  }
+};
+
+let spiderCall = true
+Game.prototype.addSpiders = function addSpiders() {
+  if (spiderCall) {
+    spiderCall = false
+    setTimeout(() => {
+      this.add(new Spider({ game: this }));
+      spiderCall = true
+    }, 5000)
   }
 };
 
@@ -72,7 +106,7 @@ Game.prototype.addShip = function addShip() {
 };
 
 Game.prototype.allObjects = function allObjects() {
-  return [].concat(this.ships, this.snakes, this.bullets);
+  return [].concat(this.ships, this.snakes, this.spiders, this.bullets, this.drips);
 };
 
 Game.prototype.checkCollisions = function checkCollisions() {
@@ -119,7 +153,6 @@ for (i = 0; i < Game.DIM_X; i += 20) {
 }
 
 Game.prototype.randomPosition = function randomPosition() {
-  console.log(mushroomPos[Math.floor(mushroomPos.length * Math.random())])
   return mushroomPos[Math.floor(mushroomPos.length * Math.random())]
 };
 
@@ -132,6 +165,10 @@ Game.prototype.remove = function remove(object) {
     this.ships.splice(this.ships.indexOf(object), 1);
   } else if (object instanceof Snake) {
     this.snakes.splice(this.snakes.indexOf(object), 1);
+  } else if (object instanceof Drip) {
+    this.drips.splice(this.drips.indexOf(object), 1);
+  } else if (object instanceof Spider) {
+    this.spiders.splice(this.spiders.indexOf(object), 1);
   } else {
     throw new Error("unknown type of object");
   }

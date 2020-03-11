@@ -21,7 +21,7 @@ let fireRate = 0
 Ship.prototype.fireBullet = function fireBullet() {
   const bullet = new Bullet({
     pos: this.pos,
-    vel: [0,-10],
+    vel: [0,-20],
     color: this.color,
     game: this.game
   });
@@ -29,7 +29,7 @@ Ship.prototype.fireBullet = function fireBullet() {
   if (fireRate === 0) {
     this.game.add(bullet);
     fireRate = 1
-    setTimeout(() => {fireRate = 0}, 300)
+    setTimeout(() => {fireRate = 0}, 200)
   }
 };
 

@@ -22,7 +22,7 @@ randomPosition = function randomPosition() {
 function Mushroom(options) {
   options = options || {};
   this.color = DEFAULTS.COLOR;
-  this.pos = randomPosition();
+  this.pos = options.pos || randomPosition();
   this.radius = DEFAULTS.RADIUS;
   this.game = options.game
   this.state = 0
@@ -52,7 +52,7 @@ Mushroom.prototype.collideWith = function collideWith(otherObject) {
     otherObject.remove();
     return true;
   } else if (otherObject instanceof Snake) {
-    otherObject.pos[1] += 20;
+    otherObject.pos[1] += otherObject.snakeDirection;
     otherObject.vel[0] = -otherObject.vel[0];
     return true;
   }
@@ -63,13 +63,17 @@ Mushroom.prototype.remove = function remove() {
   switch (this.state) {
     case 0:
       this.state += 1
-      this.color = '#b40000'
+      this.color = '#d80000'
       break
     case 1:
       this.state += 1
-      this.color = '#420000'
+      this.color = '#a30000'
       break
     case 2:
+      this.state += 1
+      this.color = '#690000'
+      break
+    case 3:
       this.game.remove(this);
       break
   }

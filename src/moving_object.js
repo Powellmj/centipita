@@ -9,7 +9,7 @@ function MovingObject(options) {
 }
 
 MovingObject.prototype.collideWith = function collideWith(otherObject) {
-  // default do nothing
+  
 };
 
 MovingObject.prototype.draw = function draw(ctx) {
@@ -38,8 +38,16 @@ MovingObject.prototype.move = function move(timeDelta) {
   if (this.game.isOutOfBounds(this.pos, this.vel)) {
     if (this.isBlockable) {
       this.vel = [0,0];
+    } else if (this.isFlippable && this.pos[1] >= 640) {
+      this.snakeDirection = -this.snakeDirection
+      this.pos[1] += this.snakeDirection;
+      this.vel[0] = -this.vel[0];
+    } else if (this.isFlippable && this.pos[1] < 540 && this.snakeDirection < 0) {
+      this.snakeDirection = -this.snakeDirection
+      this.pos[1] += this.snakeDirection;
+      this.vel[0] = -this.vel[0];
     } else if (this.isFlippable) {
-      this.pos[1] += 20;
+      this.pos[1] += this.snakeDirection;
       this.vel[0] = -this.vel[0];
     } else {
       this.remove();

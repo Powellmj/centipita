@@ -20,6 +20,8 @@ GameView.prototype.animate = function animate(time) {
   this.lastTime = time;
   
   if (!this.game.snakes.length) {this.game.addMoreSnakes()}
+  if (3 >= Math.floor(1000 * Math.random())) {this.game.addDrips()}
+  if (1 >= Math.floor(100 * Math.random())) {this.game.addSpiders()}
  
   if (key.isPressed('space')) { this.ship.fireBullet() }
   if (key.isPressed('W') && this.ship.pos[1] > 515) { shipPowerY -= 5 }
