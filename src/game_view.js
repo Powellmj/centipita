@@ -23,7 +23,7 @@ GameView.prototype.animate = function animate(time) {
   if (3 >= Math.floor(1000 * Math.random())) {this.game.addDrips()}
   if (1 >= Math.floor(100 * Math.random())) {this.game.addSpiders()}
  
-  if (key.isPressed('space')) { this.ship.fireBullet() }
+  if (key.isPressed('space') && this.game.ships.length) { this.ship.fireBullet() }
   if (key.isPressed('W') && this.ship.pos[1] > 515) { shipPowerY -= 5 }
   if (key.isPressed('A') && this.ship.pos[0] > 15) { shipPowerX -= 5 }
   if (key.isPressed('S') && this.ship.pos[1] < 645) { shipPowerY += 5 }
