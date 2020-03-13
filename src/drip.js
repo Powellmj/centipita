@@ -43,6 +43,7 @@ Drip.prototype.isCollidedWith = function isCollidedWith(otherObject) {
 
 Drip.prototype.collideWith = function collideWith(otherObject) {
   if (otherObject instanceof Bullet) {
+    this.game.score += 200
     this.game.addMush(this.pos);
     this.remove();
     otherObject.remove();

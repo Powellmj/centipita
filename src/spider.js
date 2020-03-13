@@ -65,6 +65,13 @@ Spider.prototype.move = function move(timeDelta) {
 
 Spider.prototype.collideWith = function collideWith(otherObject) {
   if (otherObject instanceof Bullet) {
+    if (this.pos[1] - this.game.ships[0].pos[1] < -200) {
+      this.game.score += 900
+    } else if (this.pos[1] - this.game.ships[0].pos[1] < -150) {
+      this.game.score += 600
+    } else {
+      this.game.score += 300
+    }
     this.remove();
     otherObject.remove();
     return true;

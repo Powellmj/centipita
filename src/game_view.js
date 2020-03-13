@@ -16,7 +16,7 @@ GameView.prototype.animate = function animate(time) {
   const timeDelta = time - this.lastTime;
 
   this.game.step(timeDelta);
-  this.game.draw(this.ctx);
+  this.game.draw(this.ctx, this.game);
   this.lastTime = time;
   
   if (!this.game.snakes.length) {this.game.addMoreSnakes()}

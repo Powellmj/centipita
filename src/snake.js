@@ -17,7 +17,7 @@ function randomColor() {
 function Snake(options) {
   options.pos = options.pos;
   options.radius = Snake.RADIUS;
-  options.vel = options.vel || [-4, 0];
+  options.vel = options.vel || [-5, 0];
   options.color = options.color || randomColor();
   this.snakeDirection = 20
   MovingObject.call(this, options);
@@ -37,6 +37,10 @@ Snake.prototype.isCollidedWith = function isCollidedWith(otherObject) {
 
 Snake.prototype.collideWith = function collideWith(otherObject) {
   if (otherObject instanceof Bullet) {
+    if (this === this.game.snakes[0]) {
+      this.score += 90
+    }
+    this.game.score += 10
     Math.round(Math.random()) ? null : this.game.addMush(this.pos);
     this.remove();
     otherObject.remove();

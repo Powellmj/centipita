@@ -13,14 +13,14 @@ function Game() {
   this.snakes = [];
   this.spiders = [];
   this.drips = [];
-
+  this.score = 0
   this.addMushrooms();
   this.addSnakes();
 }
 
 Game.BG_COLOR = "#000000";
 Game.DIM_X = 440;
-Game.DIM_Y = 660;
+Game.DIM_Y = 700;
 Game.FPS = 32;
 Game.NUM_MUSHROOMS = 25;
 Game.NUM_SNAKES = 12;
@@ -124,19 +124,29 @@ Game.prototype.checkCollisions = function checkCollisions() {
   }
 };
 
-Game.prototype.draw = function draw(ctx) {
+Game.prototype.draw = function draw(ctx, game) {
   ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
   ctx.fillStyle = Game.BG_COLOR;
   ctx.fillRect(0, 0, Game.DIM_X, Game.DIM_Y);
-
   this.allObjects().concat(this.mushrooms).forEach(function (object) {
     object.draw(ctx);
   });
+
+  ctx.beginPath();
+  ctx.lineWidth = "4";
+  ctx.strokeStyle = "cadetblue"
+  ctx.fillStyle = "cadetblue";
+  ctx.fillRect(0, 665, 500, 50);
+  ctx.stroke();
+  ctx.font = "30px Comic Sans MS";
+  ctx.fillStyle = "black";
+  ctx.textAlign = "center";
+  ctx.fillText(`Score: ${game.score}`, 220, 690);
 };
 
 Game.prototype.isOutOfBounds = function isOutOfBounds(pos, vel) {
   return (pos[0] < 10 && vel[0] < 0) || (pos[1] < 10 && vel[1] < 0) ||
-    (pos[0] > Game.DIM_X -10 && vel[0] > 0) || (pos[1] > Game.DIM_Y -10 && vel[1] > 0);
+    (pos[0] > Game.DIM_X -10 && vel[0] > 0) || (pos[1] > Game.DIM_Y -50 && vel[1] > 0);
 };
 
 Game.prototype.moveObjects = function moveObjects(delta) {

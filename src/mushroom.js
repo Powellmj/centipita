@@ -74,6 +74,7 @@ Mushroom.prototype.remove = function remove() {
       this.color = '#690000'
       break
     case 3:
+      this.game.score += 1
       this.game.remove(this);
       break
   }
